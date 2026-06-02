@@ -866,6 +866,8 @@ footer .tech{font-size:.66rem}
   position:absolute;inset:0;z-index:0;
   width:100%;height:100%;object-fit:cover;
   object-position:58% center;
+  transform:translateZ(0);
+  backface-visibility:hidden;
 }
 .hero-vid::-webkit-media-controls,
 .hero-vid::-webkit-media-controls-enclosure{display:none!important}
@@ -1545,10 +1547,10 @@ document.addEventListener('click', closeAllSpots);
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.body.classList.add('js-anim');
 
-  // Hero video slow playback
-  var hv = document.querySelector('.hero-vid');
-  if(hv){ hv.playbackRate = 0.55; hv.addEventListener('play', function(){ hv.playbackRate = 0.55; }); }
-  if(hv){ hv.addEventListener('canplay',function(){hv.playbackRate=0.45},{once:true}); }
+  // Normal playback rate for all videos
+  document.querySelectorAll('video').forEach(function(video){
+    video.playbackRate = 1;
+  });
 
   function io(el, cb, thr){
     if(!el) return;
