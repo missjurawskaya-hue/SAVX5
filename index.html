@@ -103,7 +103,6 @@ h1,h2,h3{font-family:var(--font-heading);font-weight:400;line-height:.98;letter-
 
 section{position:relative;overflow:hidden}
 
-
 /* делікатна розділова крапка-акцент */
 .accent-dot{
   width:5px;height:5px;border-radius:50%;
@@ -301,13 +300,6 @@ section{position:relative;overflow:hidden}
 .studio .ph-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:var(--text-faint);width:100%}
 .studio .ph-tag .ph-title{font-family:var(--font-heading);font-size:1.4rem;color:rgba(244,240,232,.5);margin-top:10px}
 .studio .floor{position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(to top,rgba(108,59,255,.08),transparent)}
-
-.evo-steps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px clamp(20px,4vw,56px);margin-top:36px}
-.evo-step{text-align:center;opacity:.5;transition:opacity .3s ease}
-.evo-step.is-active{opacity:1}
-.evo-step .yr{font-family:var(--font-tech);letter-spacing:.12em;font-size:.78rem;color:var(--text)}
-.evo-step .ph{font-family:var(--font-body);color:var(--text-dim);font-size:14px;font-weight:300}
-.evo-note{text-align:center;margin-top:28px;color:var(--text-faint)}
 
 /* ============================================================
    БЛОК 4.5 — ЦИФРИ МАСШТАБУ
@@ -632,7 +624,6 @@ footer .tech{font-size:.66rem}
 
 /* ── Block 7: slow drift + breathing glow ── */
 
-
 /* відео — власний рух, drift знятий */
 #final-visual::after{display:none}
 
@@ -751,17 +742,33 @@ footer .tech{font-size:.66rem}
 .era-photo{
   grid-area:photo;
   align-self:center;
+  overflow:visible;
 }
 .era-photo img{
-  display:block;width:100%;height:auto;
-  -webkit-mask-image:radial-gradient(ellipse 82% 76% at 50% 50%,
-    #000 28%,rgba(0,0,0,.55) 54%,transparent 80%);
-  mask-image:radial-gradient(ellipse 82% 76% at 50% 50%,
-    #000 28%,rgba(0,0,0,.55) 54%,transparent 80%);
-  filter:brightness(.88) saturate(.92);
+  display:block;
+  width:112%;
+  max-width:none;
+  height:auto;
+  transform:scale(1.12);
+  transform-origin:center center;
+  -webkit-mask-image:radial-gradient(ellipse 72% 64% at 50% 50%,
+    #000 0%,
+    rgba(0,0,0,.95) 22%,
+    rgba(0,0,0,.7) 42%,
+    rgba(0,0,0,.32) 62%,
+    rgba(0,0,0,.10) 80%,
+    transparent 95%);
+  mask-image:radial-gradient(ellipse 72% 64% at 50% 50%,
+    #000 0%,
+    rgba(0,0,0,.95) 22%,
+    rgba(0,0,0,.7) 42%,
+    rgba(0,0,0,.32) 62%,
+    rgba(0,0,0,.10) 80%,
+    transparent 95%);
+  filter:brightness(.96) saturate(1);
   transition:filter .6s ease;
 }
-.tl-era:hover .era-photo img{filter:brightness(.96) saturate(1)}
+.tl-era:hover .era-photo img{filter:brightness(1) saturate(1.04)}
 
 /* --- Текстова зона --- */
 .era-card{
@@ -769,8 +776,12 @@ footer .tech{font-size:.66rem}
   align-self:center;
   max-width:440px;
 }
-.tl-era--car-right .era-card{justify-self:start}
-.tl-era--car-left  .era-card{justify-self:start}
+.tl-era--car-right .era-card{justify-self:start;text-align:left}
+.tl-era--car-left  .era-card{justify-self:end;text-align:right}
+.tl-era--car-left  .era-short,
+.tl-era--car-left  .era-detail-item p{margin-left:auto}
+.tl-era--car-left  .era-trigger{margin-left:auto}
+.tl-era--car-left  .era-details-body{text-align:right}
 
 .era-eyebrow{
   display:block;font-family:var(--font-body);font-weight:500;
@@ -848,7 +859,34 @@ footer .tech{font-size:.66rem}
     min-height:auto;gap:clamp(28px,4vh,48px);
     padding:clamp(60px,8vh,100px) clamp(16px,5vw,40px);
   }
-  .era-photo img{mask-image:none;-webkit-mask-image:none}
+  .era-photo{overflow:hidden}
+  .era-photo img{
+    width:100%;
+    transform:none;
+    mask-image:none;-webkit-mask-image:none;
+  }
+  .tl-era--car-left .era-card,
+  .tl-era--car-right .era-card{
+    justify-self:start;
+    text-align:left;
+  }
+  .tl-era--car-left .era-short,
+  .tl-era--car-left .era-detail-item p,
+  .tl-era--car-left .era-trigger{margin-left:0}
+  .tl-era--car-left .era-details-body{text-align:left}
+}
+
+/* --- Mobile: зменшити зазор між Блоком 2 (character) і Блоком 3 (timeline) --- */
+@media(max-width:768px){
+  #character{
+    padding-bottom:clamp(40px,7vh,70px);
+  }
+  #timeline{
+    padding-top:clamp(48px,7vh,76px);
+  }
+  #timeline .tl-intro{
+    padding-top:clamp(32px,5vh,56px);
+  }
 }
 
 /* ============================================================
@@ -908,7 +946,6 @@ footer .tech{font-size:.66rem}
   font-variant-numeric:lining-nums;
 }
 
-
 /* Era fact accordion sections */
 .era-fact{margin-bottom:16px}
 .era-fact:last-child{margin-bottom:0}
@@ -918,7 +955,6 @@ footer .tech{font-size:.66rem}
   color:var(--violet-glow);margin-bottom:6px;
 }
 .era-fact p{margin:0;color:var(--text-dim);font-size:13px;line-height:1.7}
-
 
 /* ============================================================
    MOBILE — медіа-елементи, адаптив
@@ -1005,155 +1041,20 @@ footer .tech{font-size:.66rem}
   #final-text .final-title{font-size:clamp(28px,9vw,44px)}
 }
 
-
 /* ============================================================
    БЛОК 4 — Sticky Scroll Evolution (повний редизайн)
    ============================================================ */
 #evolution{
   position:relative;background:#03050A;
 }
-.evo-track{
-  position:relative;
-  height:600vh;            /* довжина скролу = 6 кадрів × 100vh */
-}
-.evo-sticky{
-  position:sticky;top:0;
-  height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;
-  padding:clamp(60px,9vh,110px) clamp(24px,4vw,64px) clamp(40px,6vh,80px);
-  overflow:hidden;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 55%,
-      rgba(108,59,255,.10),
-      rgba(60,80,200,.04) 40%,
-      transparent 70%),
-    #03050A;
-}
-.evo-h{
-  font-family:var(--font-heading);font-weight:400;font-style:normal;
-  font-size:clamp(48px,6vw,96px);line-height:1.04;letter-spacing:-.02em;
-  color:#F4F0E8;text-align:center;margin:0 0 clamp(20px,3vh,40px);
-  flex-shrink:0;
-}
 
 /* --- Сцена з авто --- */
-.evo-stage{
-  position:relative;
-  flex:1;width:100%;
-  display:flex;align-items:flex-end;justify-content:center;
-  min-height:0;
-}
-.evo-bg-glow{
-  position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 55% 45% at 50% 50%,
-      rgba(108,59,255,.18),
-      rgba(60,80,200,.08) 45%,
-      transparent 75%),
-    radial-gradient(ellipse 38% 28% at 50% 38%,
-      rgba(160,140,255,.10),
-      transparent 65%);
-  filter:blur(8px);
-}
-.evo-floor{
-  position:absolute;left:50%;bottom:6%;
-  transform:translateX(-50%);
-  width:min(72%,900px);height:clamp(40px,8vh,80px);
-  pointer-events:none;
-  background:
-    radial-gradient(ellipse 100% 100% at 50% 0%,
-      rgba(108,59,255,.22),
-      rgba(108,59,255,.05) 40%,
-      transparent 70%);
-  filter:blur(14px);
-}
-.evo-floor::after{
-  /* тонка тінь під авто */
-  content:"";position:absolute;left:50%;top:35%;transform:translateX(-50%);
-  width:62%;height:22%;
-  background:radial-gradient(ellipse 100% 100% at 50% 50%, rgba(0,0,0,.6), transparent 70%);
-  filter:blur(8px);
-}
 
 /* --- Авто --- */
-.evo-car{
-  position:absolute;
-  left:50%;bottom:clamp(40px,9vh,90px);
-  transform:translateX(-50%) scale(1.03) translateY(18px);
-  width:min(72vw,1100px);
-  max-height:62vh;
-  height:auto;object-fit:contain;
-  opacity:0;filter:blur(6px);
-  transition:opacity .65s ease, transform .8s cubic-bezier(.4,.0,.2,1), filter .65s ease;
-  will-change:opacity,transform,filter;
-  pointer-events:none;
-}
-.evo-car.is-active{
-  opacity:1;
-  transform:translateX(-50%) scale(1) translateY(0);
-  filter:blur(0);
-}
 
 /* --- Нижня навігація (лінія + точки років) --- */
-.evo-nav{
-  width:100%;max-width:1200px;margin-top:auto;flex-shrink:0;
-  padding-top:clamp(20px,3vh,40px);
-}
-.evo-line{
-  position:relative;height:1px;width:100%;
-  background:rgba(255,255,255,.12);overflow:hidden;
-  margin-bottom:clamp(16px,2vh,28px);
-}
-.evo-line-fill{
-  position:absolute;top:0;left:0;height:100%;
-  width:0;
-  background:linear-gradient(90deg,
-    rgba(108,59,255,.0) 0%,
-    rgba(108,59,255,.85) 50%,
-    rgba(108,59,255,.0) 100%);
-  box-shadow:0 0 12px rgba(108,59,255,.5);
-  transition:width .35s ease;
-}
-.evo-dots{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  gap:clamp(6px,2vw,24px);
-}
-.evo-dot{
-  appearance:none;background:transparent;border:none;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  font-family:var(--font-body);font-size:11.5px;font-weight:400;
-  color:rgba(244,240,232,.42);
-  padding:6px 4px 2px;letter-spacing:.04em;
-  transition:color .35s ease, transform .35s ease, text-shadow .35s ease;
-}
-.evo-dot .evo-yr{font-weight:500}
-.evo-dot .evo-sep{margin:0 5px;opacity:.5}
-.evo-dot .evo-model{opacity:.85}
-.evo-dot:hover{color:rgba(244,240,232,.72)}
-.evo-dot.is-active{
-  color:#F4F0E8;
-  transform:translateY(-2px) scale(1.06);
-  text-shadow:0 0 14px rgba(108,59,255,.45);
-}
 
 /* --- Mobile --- */
-@media(max-width:768px){
-  .evo-track{height:480vh}
-  .evo-sticky{padding:clamp(40px,7vh,80px) 16px clamp(24px,4vh,40px)}
-  .evo-h{font-size:clamp(36px,8vw,56px);margin-bottom:14px}
-  .evo-car{width:min(92vw,560px);max-height:42vh;bottom:30px}
-  .evo-floor{width:88%;height:36px}
-  .evo-dots{
-    overflow-x:auto;justify-content:flex-start;
-    scrollbar-width:none;-ms-overflow-style:none;
-    padding-bottom:4px;
-  }
-  .evo-dots::-webkit-scrollbar{display:none}
-  .evo-dot{flex-shrink:0;font-size:10.5px}
-  .evo-line{margin-bottom:14px}
-}
-
 
 /* ============================================================
    БЛОК 4 — Sticky Scroll Evolution (clean structure)
@@ -1162,6 +1063,7 @@ footer .tech{font-size:.66rem}
   height:500vh;
   background:#03050A;
   position:relative;
+  overflow:visible !important;
 }
 .evolution-sticky{
   position:sticky;top:0;
@@ -1187,6 +1089,7 @@ footer .tech{font-size:.66rem}
 .evolution-car-stage{
   position:relative;
   width:100%;
+  height:68vh;
   align-self:center;
   display:flex;align-items:center;justify-content:center;
 }
@@ -1223,20 +1126,21 @@ footer .tech{font-size:.66rem}
 /* --- Авто (absolute, всі накладені) --- */
 .evolution-car{
   position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%) scale(1.03) translateY(18px);
-  width:min(72vw,1100px);
-  max-height:58vh;height:auto;
+  left:50%;bottom:0;
+  transform:translateX(-50%);
+  width:min(84vw,1280px);
+  max-height:68vh;height:auto;
   object-fit:contain;
-  opacity:0;filter:blur(6px);
-  transition:opacity .75s ease, transform .8s cubic-bezier(.4,0,.2,1), filter .75s ease;
-  will-change:opacity,transform,filter;
+  opacity:0;
+  visibility:hidden;
+  z-index:1;
+  transition:opacity .28s ease;
   pointer-events:none;
 }
 .evolution-car.is-active{
   opacity:1;
-  transform:translate(-50%,-50%) scale(1) translateY(0);
-  filter:blur(0);
+  visibility:visible;
+  z-index:2;
 }
 
 /* --- Роки внизу --- */
@@ -1284,7 +1188,7 @@ footer .tech{font-size:.66rem}
   #evolution{height:420vh}
   .evolution-sticky{padding:clamp(34px,6vh,70px) 14px clamp(20px,4vh,40px)}
   .evolution-h{font-size:clamp(36px,8vw,56px)}
-  .evolution-car{width:min(92vw,560px);max-height:42vh}
+  .evolution-car{width:min(96vw,620px);max-height:48vh}
   .evolution-floor{width:88%}
   .evolution-dots{
     overflow-x:auto;justify-content:flex-start;
@@ -1350,7 +1254,6 @@ footer .tech{font-size:.66rem}
       історія BMW X5 у ключових етапах.</p>
     </div>
   </div>
-
 
   <div class="tl-eras">
     <div class="tl-era tl-era--car-left" data-index="0" id="tl-era-0">
@@ -1861,57 +1764,65 @@ document.addEventListener('click', closeAllSpots);
 
 /* Timeline side nav видалена */
 
-
-
-/* ── Блок 4: sticky scroll evolution ── */
+/* ── Блок 4: simple sticky gallery (.is-active class toggle) ── */
 (function(){
-  var track = document.querySelector('#evolution');
-  var cars  = document.querySelectorAll('.evolution-car');
-  var dots  = document.querySelectorAll('.evolution-dot');
-  var fill  = document.querySelector('.evolution-line-fill');
-  if(!track || !cars.length) return;
-  var total = cars.length;
+  const evolution = document.querySelector('#evolution');
+  if(!evolution) return;
+  const cars = [...document.querySelectorAll('.evolution-car')];
+  const dots = [...document.querySelectorAll('.evolution-dot')];
+  const lineFill = document.querySelector('.evolution-line-fill');
+  if(!cars.length) return;
 
-  function setActive(i){
-    cars.forEach(function(c,k){ c.classList.toggle('is-active', k===i); });
-    dots.forEach(function(d,k){ d.classList.toggle('is-active', k===i); });
-    if(fill){
-      var pct = total === 1 ? 100 : (i/(total-1))*100;
-      fill.style.width = pct + '%';
+  function clamp(value, min, max){
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function updateEvolution(){
+    const rect = evolution.getBoundingClientRect();
+    const scrollable = evolution.offsetHeight - window.innerHeight;
+    if(scrollable <= 0) return;
+    const progress = clamp(-rect.top / scrollable, 0, 1);
+
+    const activeIndex = Math.round(progress * (cars.length - 1));
+
+    cars.forEach((car, index) => {
+      car.classList.toggle('is-active', index === activeIndex);
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === activeIndex);
+    });
+
+    if(lineFill){
+      lineFill.style.width = `${progress * 100}%`;
     }
   }
 
-  dots.forEach(function(dot, i){
-    dot.addEventListener('click', function(){
-      var r = track.getBoundingClientRect();
-      var trackTop = window.scrollY + r.top;
-      var scrollableLen = track.offsetHeight - window.innerHeight;
-      if(scrollableLen <= 0){ window.scrollTo({top:trackTop,behavior:'smooth'}); return; }
-      var segLen = scrollableLen / total;
-      window.scrollTo({top: trackTop + segLen * (i + 0.5), behavior:'smooth'});
+  // Клік по точці → плавний скрол до центру сегмента
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const rect = evolution.getBoundingClientRect();
+      const trackTop = window.scrollY + rect.top;
+      const scrollable = evolution.offsetHeight - window.innerHeight;
+      if(scrollable <= 0){ window.scrollTo({top:trackTop, behavior:'smooth'}); return; }
+      const target = trackTop + (i / (cars.length - 1)) * scrollable;
+      window.scrollTo({top: target, behavior:'smooth'});
     });
   });
 
-  function update(){
-    var r = track.getBoundingClientRect();
-    var scrollableLen = track.offsetHeight - window.innerHeight;
-    if(scrollableLen <= 0){ setActive(0); return; }
-    var progress = Math.max(0, Math.min(1, (-r.top) / scrollableLen));
-    var idx = Math.min(total-1, Math.floor(progress * total));
-    setActive(idx);
-  }
-
-  var ticking = false;
-  window.addEventListener('scroll', function(){
-    if(!ticking){
-      requestAnimationFrame(function(){ update(); ticking=false; });
-      ticking = true;
+  let evolutionTicking = false;
+  window.addEventListener('scroll', () => {
+    if(!evolutionTicking){
+      requestAnimationFrame(() => {
+        updateEvolution();
+        evolutionTicking = false;
+      });
+      evolutionTicking = true;
     }
   }, {passive:true});
-  window.addEventListener('resize', update);
-  update();
+  window.addEventListener('resize', updateEvolution);
+  updateEvolution();
 })();
-
 </script>
 
 </body>
